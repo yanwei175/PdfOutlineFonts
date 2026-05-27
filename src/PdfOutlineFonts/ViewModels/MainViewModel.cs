@@ -17,7 +17,7 @@ public partial class MainViewModel : ObservableObject
     private CancellationTokenSource? conversionCts;
 
     [ObservableProperty]
-    private string ghostscriptStatus = "Ghostscript: 正在初始化...";
+    private string ghostscriptStatus = "正在初始化...";
 
     [ObservableProperty]
     private string outputDirectory = "与源文件同目录";
@@ -87,11 +87,11 @@ public partial class MainViewModel : ObservableObject
         try
         {
             await ghostscriptService.InitializeAsync(CancellationToken.None);
-            GhostscriptStatus = $"Ghostscript: {ghostscriptService.VersionText}";
+            GhostscriptStatus = $"{ghostscriptService.VersionText}";
         }
         catch (Exception ex)
         {
-            GhostscriptStatus = $"Ghostscript 初始化失败: {ex.Message}";
+            GhostscriptStatus = $"初始化失败: {ex.Message}";
         }
     }
 
@@ -254,8 +254,7 @@ public partial class MainViewModel : ObservableObject
             OverallStatusText = $"已完成 {completed}/{total}";
             RefreshCommandState();
         }
-
-        System.Windows.MessageBox.Show(
+        MessageBox.Show(
             $"共 {total} 个，成功 {success} 个，失败 {failed} 个",
             "转换完成",
             MessageBoxButton.OK,

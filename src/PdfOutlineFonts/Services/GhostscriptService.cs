@@ -1,6 +1,7 @@
 using System.Diagnostics;
 using System.IO;
 using System.Reflection;
+using System.Windows;
 using Ghostscript.NET;
 using Ghostscript.NET.Processor;
 
@@ -42,36 +43,38 @@ public sealed class GhostscriptService : IGhostscriptService
 
     public async Task ConvertToOutlinesAsync(string inputPath, string outputPath, CancellationToken cancellationToken)
     {
-        await InitializeAsync(cancellationToken);
+            await InitializeAsync(cancellationToken);
 
-        cancellationToken.ThrowIfCancellationRequested();
-
-        var folder = Path.GetDirectoryName(outputPath);
-        if (!string.IsNullOrWhiteSpace(folder))
-        {
-            Directory.CreateDirectory(folder);
-        }
-
-        var args = new[]
-        {
-            "-dBATCH",
-            "-dNOPAUSE",
-            "-dQUIET",
-            "-sDEVICE=pdfwrite",
-            "-dNoOutputFonts",
-            "-dCompatibilityLevel=1.4",
-            $"-sOutputFile={outputPath}",
-            inputPath
-        };
-
-        var versionInfo = new GhostscriptVersionInfo(dllPath!);
-
-        await Task.Run(() =>
-        {
             cancellationToken.ThrowIfCancellationRequested();
-            using var processor = new GhostscriptProcessor(versionInfo, true);
-            processor.Process(args, null);
-        }, cancellationToken);
+
+            var folder = Path.GetDirectoryName(outputPath);
+            if (!string.IsNullOrWhiteSpace(folder))
+            {
+                Directory.CreateDirectory(folder);
+            }
+
+            var args = new[]
+            {
+                "-dBATCH",
+                "-dNOPAUSE",
+                "-dQUIET",
+                "-sDEVICE=pdfwrite",
+                "-dNoOutputFonts",
+                "-dCompatibilityLevel=1.4",
+                $"-sOutputFile={outputPath}",
+                inputPath
+            };
+
+            var versionInfo = new GhostscriptVersionInfo(dllPath!);
+
+            await Task.Run(() =>
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                using var processor = new GhostscriptProcessor(versionInfo, true);
+                processor.Process(args, null);
+            }, cancellationToken);
+
+  
     }
 
     private static async Task<string> EnsureGhostscriptDllAsync(CancellationToken cancellationToken)

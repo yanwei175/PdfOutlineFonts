@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:models="clr-namespace:PdfOutlineFonts.Models"
         mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
         Title="PDF 批量转曲工具"
+        Icon="/Assets/AppIcon.ico"
         MinWidth="900"
         MinHeight="550"
         Width="1080"
@@ -21,34 +23,42 @@
 
         <DockPanel Grid.Row="0" LastChildFill="False">
             <StackPanel Orientation="Horizontal">
-                <Button Content="添加文件" Padding="14,6" Margin="0,0,8,0" Command="{Binding AddFilesCommand}" />
-                <Button Content="移除选中"
+                <Button Content="添加文件" Style="{StaticResource ButtonPrimary}"  
+                        Padding="14,6" Margin="0,0,8,0" Command="{Binding AddFilesCommand}" />
+                
+                <Button Content="移除选中" Style="{StaticResource ButtonOutline}"
                         Padding="14,6"
                         Margin="0,0,8,0"
                         Command="{Binding RemoveSelectedFilesCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=FileDataGrid}" />
-                <Button Content="清空列表" Padding="14,6" Margin="0,0,8,0" Command="{Binding ClearFilesCommand}" />
+                <Button Content="清空列表" Style="{StaticResource ButtonDanger}"
+                        Padding="14,6" Margin="0,0,8,0" Command="{Binding ClearFilesCommand}" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
                 <TextBlock Text="输出目录:" VerticalAlignment="Center" Margin="0,0,8,0" />
-                <TextBox Width="320" IsReadOnly="True" Text="{Binding OutputDirectory}" VerticalContentAlignment="Center" />
-                <Button Content="选择目录" Padding="14,6" Margin="8,0,0,0" Command="{Binding ChooseOutputDirectoryCommand}" />
+                <TextBox Width="320" IsReadOnly="True" 
+                         Style="{StaticResource MultiLineTextBoxStyle}"
+                         Text="{Binding OutputDirectory}" VerticalContentAlignment="Center" />
+                <Button Content="选择输出目录" Style="{StaticResource ButtonPrimary}" Padding="14,6" Margin="8,0,0,0" Command="{Binding ChooseOutputDirectoryCommand}" />
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
-                <Button Content="开始转换" Padding="14,6" Margin="0,0,8,0" Command="{Binding StartConversionCommand}" />
-                <Button Content="取消" Padding="14,6" Command="{Binding CancelConversionCommand}" />
+                <Button Content="开始转换" Style="{StaticResource ButtonSuccess}"
+                        Padding="14,6" Margin="0,0,8,0" Command="{Binding StartConversionCommand}" />
+                <Button Content="取消" Style="{StaticResource ButtonDanger}" Padding="14,6" Command="{Binding CancelConversionCommand}" />
             </StackPanel>
         </DockPanel>
 
-        <Border Grid.Row="2" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="4" AllowDrop="True" DragOver="FileList_DragOver" Drop="FileList_Drop">
+        <Border Grid.Row="2" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="0" AllowDrop="True" DragOver="FileList_DragOver" Drop="FileList_Drop">
             <DataGrid x:Name="FileDataGrid"
+                      Style="{StaticResource ReadOnlyDataGrid}"
                       ItemsSource="{Binding Files}"
                       AutoGenerateColumns="False"
                       SelectionMode="Extended"
                       SelectionUnit="FullRow"
                       IsReadOnly="True"
+                      RowHeight="30"
                       SelectionChanged="FileDataGrid_SelectionChanged"
                       KeyDown="FileDataGrid_KeyDown">
                 <DataGrid.ContextMenu>
@@ -90,7 +100,7 @@
             </DataGrid>
         </Border>
 
-        <StatusBar Grid.Row="4">
+        <StatusBar Grid.Row="4" Background="Transparent">
             <StatusBarItem Width="200">
                 <ProgressBar Height="14" Width="180" Minimum="0" Maximum="100" Value="{Binding OverallProgress}" />
             </StatusBarItem>

@@ -1,0 +1,101 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="../Animations.xaml" />
+    </ResourceDictionary.MergedDictionaries>
+
+    <ControlTemplate x:Key="SliderTemplate" TargetType="Slider">
+        <Grid Margin="4,8">
+
+            <Border x:Name="TrackBackground" 
+                    Height="4" CornerRadius="2" 
+                    Background="{DynamicResource Neutral4Brush}" 
+                    VerticalAlignment="Center" />
+
+            <Track x:Name="PART_Track">
+                <Track.DecreaseRepeatButton>
+                    <RepeatButton Command="{x:Static Slider.DecreaseLarge}">
+                        <RepeatButton.Template>
+                            <ControlTemplate>
+                                <Border x:Name="TrackFill" 
+                                        Height="4" CornerRadius="2" 
+                                        Background="{DynamicResource Primary5Brush}" 
+                                        VerticalAlignment="Center"/>
+                            </ControlTemplate>
+                        </RepeatButton.Template>
+                    </RepeatButton>
+                </Track.DecreaseRepeatButton>
+
+                <Track.IncreaseRepeatButton>
+                    <RepeatButton Command="{x:Static Slider.IncreaseLarge}">
+                        <RepeatButton.Template>
+                            <ControlTemplate>
+                                <Border Background="Transparent"/>
+                            </ControlTemplate>
+                        </RepeatButton.Template>
+                    </RepeatButton>
+                </Track.IncreaseRepeatButton>
+
+                <Track.Thumb>
+                    <Thumb x:Name="Thumb" Width="20" Height="20" VerticalAlignment="Center" Cursor="Hand">
+                        <Thumb.Template>
+                            <ControlTemplate TargetType="Thumb">
+                                <Border x:Name="ThumbBorder"
+                                        Background="{DynamicResource Primary5Brush}"
+                                        CornerRadius="10"
+                                        BorderBrush="{DynamicResource Neutral1Brush}"
+                                        BorderThickness="2" 
+                                        RenderTransformOrigin="0.5,0.5">
+                                    <Border.RenderTransform>
+                                        <ScaleTransform ScaleX="1" ScaleY="1" />
+                                    </Border.RenderTransform>
+                                </Border>
+                            </ControlTemplate>
+                        </Thumb.Template>
+                    </Thumb>
+                </Track.Thumb>
+            </Track>
+        </Grid>
+
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter TargetName="Thumb" Property="Background" Value="{DynamicResource Primary4Brush}" />
+            </Trigger>
+
+            <Trigger SourceName="Thumb" Property="IsDragging" Value="True">
+                <Setter TargetName="Thumb" Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform ScaleX="1.15" ScaleY="1.15" />
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter TargetName="TrackBackground" Property="Background" Value="{DynamicResource Neutral3Brush}" />
+                <Setter TargetName="Thumb" Property="Background" Value="{DynamicResource Neutral4Brush}" />
+                <Setter Property="Opacity" Value="0.5" />
+            </Trigger>
+
+            <EventTrigger RoutedEvent="Slider.Loaded">
+                <BeginStoryboard Storyboard="{StaticResource FadeInStoryboard}" />
+            </EventTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+
+    <Style TargetType="Slider">
+        <Setter Property="Template" Value="{StaticResource SliderTemplate}" />
+        <Setter Property="Foreground" Value="{DynamicResource Brush_Txt_Primary}" />
+        <Setter Property="Minimum" Value="0" />
+        <Setter Property="Maximum" Value="100" />
+        <Setter Property="TickPlacement" Value="None" />
+        <Setter Property="Orientation" Value="Horizontal" />
+    </Style>
+
+
+          
+        
+        
+    
+
+</ResourceDictionary>

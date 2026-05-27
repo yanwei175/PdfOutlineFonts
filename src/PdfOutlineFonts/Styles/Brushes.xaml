@@ -1,0 +1,199 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+
+
+
+
+
+    <!--#region 颜色笔刷 -->
+
+    <!-- Primary Brushes -->
+    <SolidColorBrush x:Key="Primary1Brush" Color="{DynamicResource Primary1}" />
+    <SolidColorBrush x:Key="Primary2Brush" Color="{DynamicResource Primary2}" />
+    <SolidColorBrush x:Key="Primary3Brush" Color="{DynamicResource Primary3}" />
+    <SolidColorBrush x:Key="Primary4Brush" Color="{DynamicResource Primary4}" />
+    <SolidColorBrush x:Key="Primary5Brush" Color="{DynamicResource Primary5}" />
+    <SolidColorBrush x:Key="Primary6Brush" Color="{DynamicResource Primary6}" />
+
+    <!-- Neutral Brushes -->
+    <SolidColorBrush x:Key="Neutral1Brush" Color="{DynamicResource Neutral1}" />
+    <SolidColorBrush x:Key="Neutral2Brush" Color="{DynamicResource Neutral2}" />
+    <SolidColorBrush x:Key="Neutral3Brush" Color="{DynamicResource Neutral3}" />
+    <SolidColorBrush x:Key="Neutral4Brush" Color="{DynamicResource Neutral4}" />
+    <SolidColorBrush x:Key="Neutral5Brush" Color="{DynamicResource Neutral5}" />
+    <SolidColorBrush x:Key="Neutral6Brush" Color="{DynamicResource Neutral6}" />
+    <SolidColorBrush x:Key="Neutral7Brush" Color="{DynamicResource Neutral7}" />
+    <SolidColorBrush x:Key="Neutral8Brush" Color="{DynamicResource Neutral8}" />
+    <SolidColorBrush x:Key="Neutral9Brush" Color="{DynamicResource Neutral9}" />
+    <SolidColorBrush x:Key="Neutral10Brush" Color="{DynamicResource Neutral10}" />
+
+    <SolidColorBrush x:Key="Green1Brush" Color="{DynamicResource Green1}" />
+    <SolidColorBrush x:Key="Green2Brush" Color="{DynamicResource Green2}" />
+    <SolidColorBrush x:Key="Green3Brush" Color="{DynamicResource Green3}" />
+    <SolidColorBrush x:Key="Green4Brush" Color="{DynamicResource Green4}" />
+    <SolidColorBrush x:Key="Green5Brush" Color="{DynamicResource Green5}" />
+    <SolidColorBrush x:Key="Green6Brush" Color="{DynamicResource Green6}" />
+    <SolidColorBrush x:Key="Green7Brush" Color="{DynamicResource Green7}" />
+    <SolidColorBrush x:Key="Green8Brush" Color="{DynamicResource Green8}" />
+    <SolidColorBrush x:Key="Green9Brush" Color="{DynamicResource Green9}" />
+    <SolidColorBrush x:Key="Green10Brush" Color="{DynamicResource Green10}" />
+
+    <SolidColorBrush x:Key="Red1Brush" Color="{DynamicResource Red1}" />
+    <SolidColorBrush x:Key="Red2Brush" Color="{DynamicResource Red2}" />
+    <SolidColorBrush x:Key="Red3Brush" Color="{DynamicResource Red3}" />
+    <SolidColorBrush x:Key="Red4Brush" Color="{DynamicResource Red4}" />
+    <SolidColorBrush x:Key="Red5Brush" Color="{DynamicResource Red5}" />
+    <SolidColorBrush x:Key="Red6Brush" Color="{DynamicResource Red6}" />
+    <SolidColorBrush x:Key="Red7Brush" Color="{DynamicResource Red7}" />
+    <SolidColorBrush x:Key="Red8Brush" Color="{DynamicResource Red8}" />
+    <SolidColorBrush x:Key="Red9Brush" Color="{DynamicResource Red9}" />
+    <SolidColorBrush x:Key="Red10Brush" Color="{DynamicResource Red10}" />
+
+    <SolidColorBrush x:Key="Yellow1Brush" Color="{DynamicResource Yellow1}" />
+    <SolidColorBrush x:Key="Yellow2Brush" Color="{DynamicResource Yellow2}" />
+    <SolidColorBrush x:Key="Yellow3Brush" Color="{DynamicResource Yellow3}" />
+    <SolidColorBrush x:Key="Yellow4Brush" Color="{DynamicResource Yellow4}" />
+    <SolidColorBrush x:Key="Yellow5Brush" Color="{DynamicResource Yellow5}" />
+    <SolidColorBrush x:Key="Yellow6Brush" Color="{DynamicResource Yellow6}" />
+    <SolidColorBrush x:Key="Yellow7Brush" Color="{DynamicResource Yellow7}" />
+    <SolidColorBrush x:Key="Yellow8Brush" Color="{DynamicResource Yellow8}" />
+    <SolidColorBrush x:Key="Yellow9Brush" Color="{DynamicResource Yellow9}" />
+    <SolidColorBrush x:Key="Yellow10Brush" Color="{DynamicResource Yellow10}" />
+
+
+    <!-- 语义化 Brush（推荐在项目里用这些） -->
+
+
+
+    <SolidColorBrush x:Key="BtnBckBaseBrush" Color="{DynamicResource Neutral2}" />
+    <SolidColorBrush x:Key="BtnFckBaseBrush" Color="{DynamicResource Neutral9}" />
+
+    <SolidColorBrush x:Key="BtnBckPrimaryBrush" Color="{DynamicResource Primary5}" />
+    <SolidColorBrush x:Key="BtnFckPrimaryBrush" Color="{DynamicResource Neutral2}" />
+
+    <SolidColorBrush x:Key="BtnBckDangerBrush" Color="{DynamicResource Neutral2}" />
+    <SolidColorBrush x:Key="BtnFckDangerBrush" Color="{DynamicResource Error}" />
+    <!--#endregion-->
+
+
+    <!--#region 启用的新画刷-->
+
+    <!--#region 背景系统-->
+
+    <!-- Page / Window -->
+    <SolidColorBrush x:Key="Brush_Bck_Page" Color="{DynamicResource Neutral1}" />
+
+    <!-- 卡片 / Panel -->
+    <SolidColorBrush x:Key="Brush_Bck_Card" Color="{DynamicResource Neutral1}" />
+
+    <!-- 浮层 / 下拉 / Tooltip -->
+    <SolidColorBrush x:Key="Brush_Bck_Popup" Color="{DynamicResource Neutral1}" />
+
+    <!-- 次级背景（分区） -->
+    <SolidColorBrush x:Key="Brush_Bck_Subtle" Color="{DynamicResource Neutral3}" />
+    <!--#endregion-->
+
+
+    <!--#region 文字系统-->
+
+    <SolidColorBrush x:Key="Brush_Txt_Primary" Color="{DynamicResource Neutral9}" />
+    <SolidColorBrush x:Key="Brush_Txt_Secondary" Color="{DynamicResource Neutral7}" />
+    <SolidColorBrush x:Key="Brush_Txt_Tertiary" Color="{DynamicResource Neutral6}" />
+    <SolidColorBrush x:Key="Brush_Txt_Disabled" Color="{DynamicResource Neutral5}" />
+
+    <!-- 反色（按钮白字） -->
+    <SolidColorBrush x:Key="Brush_Txt_Inverse" Color="{DynamicResource Neutral1}" />
+
+    <!--#endregion-->
+
+    <!--#region 边框和分割线-->
+    <SolidColorBrush x:Key="Brush_Border_Default" Color="{DynamicResource Neutral5}" />
+    <SolidColorBrush x:Key="Brush_Border_Light" Color="{DynamicResource Neutral4}" />
+    <SolidColorBrush x:Key="Brush_Border_Strong" Color="{DynamicResource Neutral6}" />
+
+    <SolidColorBrush x:Key="Brush_Divider" Color="{DynamicResource Neutral4}" />
+    <!--#endregion-->
+
+    <!--#region 主色系统交互核心-->
+    <SolidColorBrush x:Key="Brush_Primary" Color="{DynamicResource Primary5}" />
+    <SolidColorBrush x:Key="Brush_Primary_Hover" Color="{DynamicResource Primary4}" />
+    <SolidColorBrush x:Key="Brush_Primary_Pressed" Color="{DynamicResource Primary6}" />
+    <SolidColorBrush x:Key="Brush_Primary_Subtle" Color="{DynamicResource Primary1}" />
+
+    <!-- 焦点（输入框蓝边） -->
+    <SolidColorBrush x:Key="Brush_Primary_Focus" Color="{DynamicResource Primary5}" />
+    <!--#endregion-->
+
+
+    <!--#region 控件状态系统-->
+    <!-- 默认 -->
+    <SolidColorBrush x:Key="Brush_Control_Background" Color="{DynamicResource Neutral1}" />
+
+    <!-- Hover -->
+    <SolidColorBrush x:Key="Brush_Control_Hover" Color="{DynamicResource Neutral3}" />
+
+    <!-- Pressed -->
+    <SolidColorBrush x:Key="Brush_Control_Pressed" Color="{DynamicResource Neutral4}" />
+
+    <!-- Disabled -->
+    <SolidColorBrush x:Key="Brush_Control_Disabled" Color="{DynamicResource Neutral3}" />
+    <SolidColorBrush x:Key="Brush_Control_Border_Disabled" Color="{DynamicResource Neutral4}" />
+    <!--#endregion-->
+
+    <!--#region 选中 / 高亮-->
+    <SolidColorBrush x:Key="Brush_Selection_Background" Color="{DynamicResource Primary2}" />
+    <SolidColorBrush x:Key="Brush_Selection_Border" Color="{DynamicResource Primary5}" />
+    <SolidColorBrush x:Key="Brush_Selection_Hover" Color="{DynamicResource Primary2}" />
+    <!--#endregion-->
+
+    <!--#region DataGrid-->
+    <SolidColorBrush x:Key="Brush_DataGridHeaderBck" Color="{DynamicResource Neutral2}" />
+    <SolidColorBrush x:Key="Brush_DataGridMouseOver" Color="{DynamicResource Neutral4}" />
+
+    <SolidColorBrush x:Key="Brush_DataGridSelectionCell" Color="{DynamicResource Primary2}" />
+    
+    <!--#endregion-->
+    <!--#region 状态色（业务提示）-->
+    <SolidColorBrush x:Key="Brush_Success" Color="{DynamicResource Success}" />
+    <SolidColorBrush x:Key="Brush_Attention" Color="{DynamicResource Attention}" />
+    <SolidColorBrush x:Key="Brush_Warning" Color="{DynamicResource Warning}" />
+    <SolidColorBrush x:Key="Brush_MisTake" Color="{DynamicResource MisTake}" />
+    <SolidColorBrush x:Key="Brush_Error" Color="{DynamicResource Error}" />
+    <SolidColorBrush x:Key="Brush_Danger" Color="{DynamicResource Danger}" />
+    <SolidColorBrush x:Key="Brush_Info" Color="{DynamicResource Info}" />
+    <!--#endregion-->
+
+    <!--#region 输入控件专用（TextBox / ComboBox）-->
+    <SolidColorBrush x:Key="Brush_Input_Background" Color="{DynamicResource Neutral1}" />
+    <SolidColorBrush x:Key="Brush_Input_Border" Color="{DynamicResource Neutral5}" />
+    <SolidColorBrush x:Key="Brush_Input_FocusBorder" Color="{DynamicResource Primary5}" />
+    <SolidColorBrush x:Key="Brush_Input_Placeholder" Color="{DynamicResource Neutral6}" />
+    <!--#endregion-->
+
+    <!--#region 按钮专用（避免混乱）-->
+    <SolidColorBrush x:Key="Brush_Btn_Primary_Background" Color="{DynamicResource Primary5}" />
+    <SolidColorBrush x:Key="Brush_Btn_Primary_Hover" Color="{DynamicResource Primary4}" />
+    <SolidColorBrush x:Key="Brush_Btn_Primary_Pressed" Color="{DynamicResource Primary6}" />
+    <SolidColorBrush x:Key="Brush_Btn_Primary_Foreground" Color="{DynamicResource Neutral1}" />
+
+    <SolidColorBrush x:Key="Brush_Btn_Default_Background" Color="{DynamicResource Neutral1}" />
+    <SolidColorBrush x:Key="Brush_Btn_Default_Hover" Color="{DynamicResource Neutral3}" />
+    <SolidColorBrush x:Key="Brush_Btn_Default_Pressed" Color="{DynamicResource Neutral5}" />
+    <SolidColorBrush x:Key="Brush_Btn_Default_Foreground" Color="{DynamicResource Neutral10}" />
+
+
+
+    <!-- 禁用 -->
+    <SolidColorBrush x:Key="Brush_Btn_Primary_Disabled_Bck" Color="{DynamicResource Neutral4}" />
+    <SolidColorBrush x:Key="Brush_Btn_Primary_Disabled_Fck" Color="{DynamicResource Neutral6}" />
+
+    <!--#endregion-->
+
+    <!--#endregion-->
+
+
+
+
+
+</ResourceDictionary>

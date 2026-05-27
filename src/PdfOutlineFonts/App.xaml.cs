@@ -11,7 +11,7 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        IGhostscriptService ghostscriptService = new GhostscriptService();
+        IGhostscriptService ghostscriptService = new GhostscriptUtf8Service();
         var viewModel = new MainViewModel(ghostscriptService);
 
         var window = new MainWindow

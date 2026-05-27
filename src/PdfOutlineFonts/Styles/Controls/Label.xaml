@@ -1,0 +1,34 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Style x:Key="BaseLabel" TargetType="Label" >
+        <Setter Property="FontWeight" Value="Regular"/>
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource Brush_Txt_Primary}"/>
+    </Style>
+
+    <Style x:Key="BoldLabel" TargetType="Label" BasedOn="{StaticResource BaseLabel}">
+        <Setter Property="FontWeight" Value="Bold"/>
+    </Style>
+
+    <Style x:Key="RequiredLabel" TargetType="Label" BasedOn="{StaticResource BoldLabel}">
+        <Setter Property="HorizontalContentAlignment" Value="Right"/>
+        <Setter Property="Margin" Value="0,0,0,0"/>
+        <Setter Property="Padding" Value="0,0,0,0"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Label">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="*" Foreground="{DynamicResource  Brush_Danger}" Margin="0,0,3,0"/>
+                        <ContentPresenter/>
+                    </StackPanel>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style TargetType="Label" BasedOn="{StaticResource BaseLabel}"/>
+
+</ResourceDictionary>
