@@ -42,11 +42,6 @@ public partial class MainWindow : Window
         }
     }
 
-    private void RemoveSelected_Click(object sender, RoutedEventArgs e)
-    {
-        RemoveSelectedItems();
-    }
-
     private void FileDataGrid_KeyDown(object sender, KeyEventArgs e)
     {
         if (e.Key == Key.Delete)

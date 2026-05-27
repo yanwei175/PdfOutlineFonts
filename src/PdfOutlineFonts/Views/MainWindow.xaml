@@ -22,7 +22,11 @@
         <DockPanel Grid.Row="0" LastChildFill="False">
             <StackPanel Orientation="Horizontal">
                 <Button Content="添加文件" Padding="14,6" Margin="0,0,8,0" Command="{Binding AddFilesCommand}" />
-                <Button Content="移除选中" Padding="14,6" Margin="0,0,8,0" Click="RemoveSelected_Click" />
+                <Button Content="移除选中"
+                        Padding="14,6"
+                        Margin="0,0,8,0"
+                        Command="{Binding RemoveSelectedFilesCommand}"
+                        CommandParameter="{Binding SelectedItems, ElementName=FileDataGrid}" />
                 <Button Content="清空列表" Padding="14,6" Margin="0,0,8,0" Command="{Binding ClearFilesCommand}" />
             </StackPanel>
 
@@ -49,7 +53,9 @@
                       KeyDown="FileDataGrid_KeyDown">
                 <DataGrid.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="移除选中" Click="RemoveSelected_Click" />
+                        <MenuItem Header="移除选中"
+                                  Command="{Binding PlacementTarget.DataContext.RemoveSelectedFilesCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}"
+                                  CommandParameter="{Binding PlacementTarget.SelectedItems, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
                     </ContextMenu>
                 </DataGrid.ContextMenu>
                 <DataGrid.Columns>

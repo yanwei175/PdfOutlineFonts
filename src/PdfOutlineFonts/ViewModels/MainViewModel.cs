@@ -40,7 +40,7 @@ public partial class MainViewModel : ObservableObject
     {
         this.ghostscriptService = ghostscriptService;
 
-        AddFilesCommand = new RelayCommand(AddFiles);
+        AddFilesCommand = new RelayCommand(AddFiles, () => !IsConverting);
         RemoveSelectedFilesCommand = new RelayCommand<IList?>(RemoveSelectedFiles, selected => !IsConverting && selected is { Count: > 0 });
         ClearFilesCommand = new RelayCommand(ClearFiles, () => !IsConverting);
         ChooseOutputDirectoryCommand = new RelayCommand(ChooseOutputDirectory, () => !IsConverting);
