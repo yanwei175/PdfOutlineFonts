@@ -2,6 +2,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using PdfOutlineFonts.ViewModels;
 
 namespace PdfOutlineFonts.Services;
 
@@ -53,7 +54,7 @@ public sealed class GhostscriptUtf8Service : IGhostscriptService
         }
     }
 
-    public async Task ConvertToOutlinesAsync(string inputPath, string outputPath, CancellationToken cancellationToken)
+    public async Task ConvertAsync(string inputPath, string outputPath, PdfConvertMode convertMode, int dpi, CancellationToken cancellationToken)
     {
         await InitializeAsync(cancellationToken);
         cancellationToken.ThrowIfCancellationRequested();
@@ -64,20 +65,46 @@ public sealed class GhostscriptUtf8Service : IGhostscriptService
             Directory.CreateDirectory(folder);
         }
 
-        var args = new[]
-        {
-            "gs",
-            "-dBATCH",
-            "-dNOPAUSE",
-            "-dQUIET",
-            "-sDEVICE=pdfwrite",
-            "-dNoOutputFonts",
-            "-dCompatibilityLevel=1.4",
-            $"-sOutputFile={outputPath}",
-            inputPath
-        };
+        var safeDpi = Math.Clamp(dpi, 72, 1200);
+        var args = BuildArgs(inputPath, outputPath, convertMode, safeDpi);
 
         await Task.Run(() => ExecuteGhostscript(args, cancellationToken), cancellationToken);
+    }
+
+    private static string[] BuildArgs(string inputPath, string outputPath, PdfConvertMode convertMode, int dpi)
+    {
+        return convertMode switch
+        {
+            PdfConvertMode.Vector =>
+            [
+                "gs",
+                "-dBATCH",
+                "-dNOPAUSE",
+                "-dQUIET",
+                "-sDEVICE=pdfwrite",
+                "-dNoOutputFonts",
+                "-dCompatibilityLevel=1.4",
+                $"-sOutputFile={outputPath}",
+                inputPath
+            ],
+            PdfConvertMode.Image =>
+            [
+                "gs",
+                "-dBATCH",
+                "-dNOPAUSE",
+                "-dQUIET",
+                "-sDEVICE=pdfimage24",
+                "-dAutoRotatePages=/None",
+                "-dTextAlphaBits=4",
+                "-dGraphicsAlphaBits=4",
+                "-dAlignToPixels=0",
+                "-dGridFitTT=2",
+                $"-r{dpi}",
+                $"-sOutputFile={outputPath}",
+                inputPath
+            ],
+            _ => throw new ArgumentOutOfRangeException(nameof(convertMode), convertMode, null)
+        };
     }
 
     private void ExecuteGhostscript(string[] args, CancellationToken cancellationToken)

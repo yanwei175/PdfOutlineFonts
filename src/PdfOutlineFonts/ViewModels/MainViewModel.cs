@@ -1,20 +1,32 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using HandyControl.Controls;
+using Microsoft.Win32;
+using PdfOutlineFonts.Models;
+using PdfOutlineFonts.Services;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Windows;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Microsoft.Win32;
-using PdfOutlineFonts.Models;
-using PdfOutlineFonts.Services;
+using MessageBox = HandyControl.Controls.MessageBox;
 
 namespace PdfOutlineFonts.ViewModels;
 
 public partial class MainViewModel : ObservableObject
 {
     private readonly IGhostscriptService ghostscriptService;
-    private readonly SemaphoreSlim conversionSemaphore = new(2, 2);
     private CancellationTokenSource? conversionCts;
+    public List<int> ThreadCounts { get; }
+    public List<int> DpiOptions { get; }
+
+    [ObservableProperty]
+    private PdfConvertMode convertMode = PdfConvertMode.Vector;
+
+    [ObservableProperty]
+    private int selectedThreadCount;
+
+    [ObservableProperty]
+    private int selectedDpi;
 
     [ObservableProperty]
     private string ghostscriptStatus = "正在初始化...";
@@ -39,6 +51,15 @@ public partial class MainViewModel : ObservableObject
     public MainViewModel(IGhostscriptService ghostscriptService)
     {
         this.ghostscriptService = ghostscriptService;
+
+
+        int max = Environment.ProcessorCount;
+
+        ThreadCounts = [.. Enumerable.Range(1, max)];
+
+        SelectedThreadCount = Math.Min(2, max); // 默认使用2线程，既能提升性能又不会过度占用资源
+        DpiOptions = [150, 200, 300, 600, 1200, 1500];
+        SelectedDpi = 600;
 
         AddFilesCommand = new RelayCommand(AddFiles, () => !IsConverting);
         RemoveSelectedFilesCommand = new RelayCommand<IList?>(RemoveSelectedFiles, selected => !IsConverting && selected is { Count: > 0 });
@@ -173,6 +194,8 @@ public partial class MainViewModel : ObservableObject
 
         conversionCts = new CancellationTokenSource();
         var token = conversionCts.Token;
+        var maxThreadCount = Math.Clamp(SelectedThreadCount, 1, Math.Max(1, Environment.ProcessorCount));
+        using var conversionSemaphore = new SemaphoreSlim(maxThreadCount, maxThreadCount);
 
         IsConverting = true;
         OverallProgress = 0;
@@ -211,7 +234,7 @@ public partial class MainViewModel : ObservableObject
                 var outputDirectory = ResolveOutputDirectory(file.FilePath);
                 var outputFile = Path.Combine(outputDirectory, GetOutlinedFileName(file.FilePath));
 
-                await ghostscriptService.ConvertToOutlinesAsync(file.FilePath, outputFile, token);
+                await ghostscriptService.ConvertAsync(file.FilePath, outputFile, ConvertMode, SelectedDpi, token);
                 file.Status = "已完成";
                 Interlocked.Increment(ref success);
             }
@@ -256,9 +279,7 @@ public partial class MainViewModel : ObservableObject
         }
         MessageBox.Show(
             $"共 {total} 个，成功 {success} 个，失败 {failed} 个",
-            "转换完成",
-            MessageBoxButton.OK,
-            MessageBoxImage.Information);
+            "转换完成", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void CancelConversion()
@@ -308,4 +329,9 @@ public partial class MainViewModel : ObservableObject
         var nameWithoutExtension = Path.GetFileNameWithoutExtension(inputPath);
         return $"{nameWithoutExtension}_outlined.pdf";
     }
+}
+public enum PdfConvertMode
+{
+    Vector,
+    Image
 }

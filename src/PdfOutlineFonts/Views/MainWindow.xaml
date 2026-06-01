@@ -3,7 +3,11 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PdfOutlineFonts"
         xmlns:models="clr-namespace:PdfOutlineFonts.Models"
+        xmlns:vm="clr-namespace:PdfOutlineFonts.ViewModels"
+        xmlns:con="clr-namespace:PdfOutlineFonts.Converters"
+        d:DataContext="{d:DesignInstance Type=vm:MainViewModel}"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         Title="PDF 批量转曲工具"
@@ -12,6 +16,11 @@
         MinHeight="550"
         Width="1080"
         Height="680">
+
+    <Window.Resources>
+        <con:EnumToBooleanConverter x:Key="EnumToBooleanConverter"/>
+    </Window.Resources>
+
     <Grid Margin="12">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -20,45 +29,80 @@
             <RowDefinition Height="12" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-
-        <DockPanel Grid.Row="0" LastChildFill="False">
-            <StackPanel Orientation="Horizontal">
-                <Button Content="添加文件" Style="{StaticResource ButtonPrimary}"  
+        <StackPanel Grid.Row="0" Orientation="Vertical">
+            <DockPanel Grid.Row="0" LastChildFill="False">
+                <StackPanel Orientation="Horizontal">
+                    <Button Content="添加文件" Style="{StaticResource ButtonPrimary}"  
                         Padding="14,6" Margin="0,0,8,0" Command="{Binding AddFilesCommand}" />
-                
-                <Button Content="移除选中" Style="{StaticResource ButtonOutline}"
+
+                    <Button Content="移除选中" 
                         Padding="14,6"
                         Margin="0,0,8,0"
                         Command="{Binding RemoveSelectedFilesCommand}"
                         CommandParameter="{Binding SelectedItems, ElementName=FileDataGrid}" />
-                <Button Content="清空列表" Style="{StaticResource ButtonDanger}"
+                    <Button Content="清空列表" Style="{StaticResource ButtonDanger}"
                         Padding="14,6" Margin="0,0,8,0" Command="{Binding ClearFilesCommand}" />
-            </StackPanel>
+                </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
-                <TextBlock Text="输出目录:" VerticalAlignment="Center" Margin="0,0,8,0" />
-                <TextBox Width="320" IsReadOnly="True" 
-                         Style="{StaticResource MultiLineTextBoxStyle}"
+                <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
+                    <TextBlock Text="输出目录:" VerticalAlignment="Center" Margin="0,0,8,0" />
+                    <TextBox Width="320" IsReadOnly="True" 
                          Text="{Binding OutputDirectory}" VerticalContentAlignment="Center" />
-                <Button Content="选择输出目录" Style="{StaticResource ButtonPrimary}" Padding="14,6" Margin="8,0,0,0" Command="{Binding ChooseOutputDirectoryCommand}" />
-            </StackPanel>
+                    <Button Content="选择输出目录" Style="{StaticResource ButtonPrimary}" Padding="14,6" Margin="8,0,0,0" Command="{Binding ChooseOutputDirectoryCommand}" />
+                </StackPanel>
 
-            <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
-                <Button Content="开始转换" Style="{StaticResource ButtonSuccess}"
+                <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
+                    <Button Content="开始转换" Style="{StaticResource ButtonSuccess}"
                         Padding="14,6" Margin="0,0,8,0" Command="{Binding StartConversionCommand}" />
-                <Button Content="取消" Style="{StaticResource ButtonDanger}" Padding="14,6" Command="{Binding CancelConversionCommand}" />
-            </StackPanel>
-        </DockPanel>
+                    <Button Content="取消" Style="{StaticResource ButtonDanger}" Padding="14,6" Command="{Binding CancelConversionCommand}" />
+                </StackPanel>
+            </DockPanel>
+            
+            <StackPanel Orientation="Horizontal" Margin="0,8">
+                <TextBlock Text="使用线程数: " FontWeight="Bold" VerticalAlignment="Center" />
 
-        <Border Grid.Row="2" BorderBrush="#E0E0E0" BorderThickness="1" CornerRadius="4" Padding="0" AllowDrop="True" DragOver="FileList_DragOver" Drop="FileList_Drop">
-            <DataGrid x:Name="FileDataGrid"
-                      Style="{StaticResource ReadOnlyDataGrid}"
+                <ComboBox Margin="8,0"
+                          Width="80"
+                          ItemsSource="{Binding ThreadCounts}"
+                          SelectedItem="{Binding SelectedThreadCount, Mode=TwoWay}" />
+
+
+                <RadioButton Margin="8,0"
+                             Content="转成矢量Pdf"
+                             IsChecked="{Binding ConvertMode,
+                             Converter={StaticResource EnumToBooleanConverter},
+                             ConverterParameter={x:Static vm:PdfConvertMode.Vector}}"/>
+
+                <RadioButton Margin="8,0"
+                             Content="转成图片Pdf"
+                             IsChecked="{Binding ConvertMode,
+                             Converter={StaticResource EnumToBooleanConverter},
+                             ConverterParameter={x:Static vm:PdfConvertMode.Image}}"/>
+
+                <TextBlock Text="DPI: " FontWeight="Bold" VerticalAlignment="Center" Margin="16,0,0,0" />
+                <ComboBox Margin="8,0"
+                          Width="90"
+                          ItemsSource="{Binding DpiOptions}"
+                          SelectedItem="{Binding SelectedDpi, Mode=TwoWay}"
+                          IsEnabled="{Binding ConvertMode,
+                          Converter={StaticResource EnumToBooleanConverter},
+                          ConverterParameter={x:Static vm:PdfConvertMode.Image}}" />
+            </StackPanel>
+            
+        </StackPanel>
+        <DataGrid x:Name="FileDataGrid"
+                      Grid.Row="2" 
+                      Style="{StaticResource   DataGrid.Small}"
+                      Background="Transparent"
+                       AllowDrop="True"
                       ItemsSource="{Binding Files}"
                       AutoGenerateColumns="False"
                       SelectionMode="Extended"
                       SelectionUnit="FullRow"
                       IsReadOnly="True"
                       RowHeight="30"
+                       DragOver="FileList_DragOver"
+                       Drop="FileList_Drop"
                       SelectionChanged="FileDataGrid_SelectionChanged"
                       KeyDown="FileDataGrid_KeyDown">
                 <DataGrid.ContextMenu>
@@ -98,7 +142,7 @@
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-        </Border>
+
 
         <StatusBar Grid.Row="4" Background="Transparent">
             <StatusBarItem Width="200">
